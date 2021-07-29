@@ -4,7 +4,7 @@ const config: MenuEntry[] = [
   {
     label: 'Home',
     icon: 'HomeIcon',
-    href: 'https://pancakeswap-testnet.netlify.app/',
+    href: 'https://pancakeswap.finance',
   },
   {
     label: 'Trade',
@@ -21,11 +21,11 @@ const config: MenuEntry[] = [
       },
       {
         label: 'Exchange',
-        href: 'https://pancakeswap-testnet.netlify.app/#/swap',
+        href: 'https://pancakeswap.finance#/swap',
       },
       {
         label: 'Liquidity',
-        href: 'https://pancakeswap-testnet.netlify.app/#/pool',
+        href: 'https://pancakeswap.finance#/pool',
       },
       {
         label: 'V1 Liquidity (Old)',
@@ -36,7 +36,7 @@ const config: MenuEntry[] = [
   {
     label: 'Farms',
     icon: 'FarmIcon',
-    href: 'https://pancakeswap-testnet.netlify.app/farms',
+    href: 'https://pancakeswap.financefarms',
   },
   {
     label: 'Pools',
