@@ -13,11 +13,11 @@ const getBackgroundColor = ({ theme, variant }: StyledButtonMenuProps) => {
 };
 
 const getBorderColor = ({ theme, variant }: StyledButtonMenuProps) => {
-  return theme.colors[variant === variants.SUBTLE ? "inputSecondary" : "disabled"];
+  return theme.colors.tertiary;
 };
 
 const StyledButtonMenu = styled.div<StyledButtonMenuProps>`
-  background-color: ${getBackgroundColor};
+  background-color: #fff;
   border-radius: 16px;
   display: inline-flex;
   border: 1px solid ${getBorderColor};

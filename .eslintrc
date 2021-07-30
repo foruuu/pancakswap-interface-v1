@@ -14,7 +14,10 @@
 
   "extends": "@pancakeswap-libs/eslint-config-pancake",
   "rules": {
-    "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
+    "global-require": 0,
+    "react/destructuring-assignment": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "no-console": 0,
     "no-plusplus": 0,
     "prefer-destructuring": ["warn", { "object": true, "array": false }],
     "max-classes-per-file": 0,
