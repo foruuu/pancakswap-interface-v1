@@ -36,3 +36,5 @@ cypress/screenshots
 cypress/fixtures/example.json
 
 .eslintcache
+
+src/lib/node_modules
