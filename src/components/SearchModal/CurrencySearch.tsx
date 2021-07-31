@@ -4,7 +4,7 @@ import { Text, CloseIcon } from '../../uikit'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { FixedSizeList } from 'react-window'
-import { ThemeContext } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import useI18n from 'hooks/useI18n'
 import { useActiveWeb3React } from '../../hooks'
@@ -34,6 +34,16 @@ interface CurrencySearchProps {
   showCommonBases?: boolean
   onChangeList: () => void
 }
+
+const ThroughLine = styled.div`
+  width: 100%;
+  height: 1px;
+  opacity: 0.27;
+  background: #979797;
+  position: relative;
+  top: 2px;
+  left: 0;
+`
 
 export function CurrencySearch({
   selectedCurrency,
@@ -141,7 +151,7 @@ export function CurrencySearch({
     <Column style={{ width: '100%', flex: '1 1' }}>
       <PaddedColumn gap="14px">
         <RowBetween>
-          <Text>
+          <Text fontSize="26px" color="primary" style={{ fontWeight: 800 }}>
             {TranslateString(82, 'Select a token')}
             <QuestionHelper
               text={TranslateString(
@@ -150,8 +160,11 @@ export function CurrencySearch({
               )}
             />
           </Text>
-          <CloseIcon onClick={onDismiss} />
+          <CloseIcon style={{ cursor: 'pointer' }} onClick={onDismiss} />
         </RowBetween>
+
+        <ThroughLine />
+
         <SearchInput
           type="text"
           id="token-search-input"
@@ -197,6 +210,7 @@ export function CurrencySearch({
                 <Row>
                   {selectedListInfo.current.logoURI ? (
                     <ListLogo
+                      size="24px"
                       style={{ marginRight: 12 }}
                       logoURI={selectedListInfo.current.logoURI}
                       alt={`${selectedListInfo.current.name} list logo`}

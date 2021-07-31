@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { Currency, Pair } from '@nguyenphu27/sdk'
 import { Button, ChevronDownIcon, Text } from '../../uikit'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { darken } from 'polished'
 import useI18n from 'hooks/useI18n'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
@@ -31,9 +31,11 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   user-select: none;
   border: none;
   padding: 0 0.5rem;
+
   :focus,
   :hover {
-    background-color: ${({ theme }) => darken(0.05, theme.colors.input)};
+    background-color: ${({ theme }) => darken(0.05, theme.colors.primary)};
+    color: #fff;
   }
 `
 const LabelRow = styled.div`
@@ -44,6 +46,7 @@ const LabelRow = styled.div`
   font-size: 0.75rem;
   line-height: 1rem;
   padding: 0.75rem 1rem 0 1rem;
+
   span:hover {
     cursor: pointer;
     color: ${({ theme }) => darken(0.2, theme.colors.textSubtle)};
@@ -59,14 +62,14 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
   flex-flow: column nowrap;
   position: relative;
   border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: transparent;
   z-index: 1;
 `
 const Container = styled.div<{ hideInput: boolean }>`
   border-radius: 16px;
-  background-color: ${({ theme }) => theme.colors.input};
-  box-shadow: ${({ theme }) => theme.shadows.inset};
+  background-color: transparent;
 `
+
 interface CurrencyInputPanelProps {
   value: string
   onUserInput: (value: string) => void
@@ -83,6 +86,7 @@ interface CurrencyInputPanelProps {
   id: string
   showCommonBases?: boolean
 }
+
 export default function CurrencyInputPanel({
   value,
   onUserInput,
@@ -100,6 +104,7 @@ export default function CurrencyInputPanel({
   showCommonBases,
 }: CurrencyInputPanelProps) {
   const [modalOpen, setModalOpen] = useState(false)
+  const theme = useTheme()
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const TranslateString = useI18n()
@@ -113,9 +118,18 @@ export default function CurrencyInputPanel({
         {!hideInput && (
           <LabelRow>
             <RowBetween>
-              <Text fontSize="14px">{translatedLabel}</Text>
+              <Text
+                fontSize="18px"
+                style={{
+                  fontWeight: 800,
+                  fontFamily: 'alibaba-puhuiti, sans-serif',
+                  color: '#949494',
+                }}
+              >
+                {translatedLabel}
+              </Text>
               {account && (
-                <Text onClick={onMax} fontSize="14px" style={{ display: 'inline', cursor: 'pointer' }}>
+                <Text onClick={onMax} fontSize="17px" style={{ display: 'inline', cursor: 'pointer' }}>
                   {!hideBalance && !!currency && selectedCurrencyBalance
                     ? `Balance: ${selectedCurrencyBalance?.toSignificant(6)}`
                     : ' -'}
@@ -128,6 +142,7 @@ export default function CurrencyInputPanel({
           {!hideInput && (
             <>
               <NumericalInput
+                fontSize="30px"
                 className="token-amount-input"
                 value={value}
                 onUserInput={(val) => {
