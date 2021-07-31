@@ -17,7 +17,7 @@ import { AutoColumn } from '../Column'
 const Wrapper = styled.div<{ error: boolean }>`
   background: ${({ theme }) => transparentize(0.6, theme.colors.tertiary)};
   padding: 0.75rem;
-  border-radius: 20px;
+  border-radius: 2px !important;
 `
 
 const WarningContainer = styled.div`
@@ -26,7 +26,7 @@ const WarningContainer = styled.div`
   padding: 1rem;
   background: rgba(242, 150, 2, 0.05);
   border: 1px solid #f3841e;
-  border-radius: 20px;
+  border-radius: 2px;
   overflow: auto;
 `
 
@@ -111,13 +111,13 @@ export default function TokenWarningModal({
           <Text>
             {TranslateString(
               1130,
-              'Anyone can create a BEP20 token on BSC with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.'
+              'Anyone can create a KRC20 token on KCC with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.'
             )}
           </Text>
           <Text>
             {TranslateString(
               1132,
-              'This interface can load arbitrary tokens by token addresses. Please take extra caution and do your research when interacting with arbitrary BEP20 tokens.'
+              'This interface can load arbitrary tokens by token addresses. Please take extra caution and do your research when interacting with arbitrary KRC20 tokens.'
             )}
           </Text>
           <Text>{TranslateString(1134, 'If you purchase an arbitrary token, you may be unable to sell it back.')}</Text>

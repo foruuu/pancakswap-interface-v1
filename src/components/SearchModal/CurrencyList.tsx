@@ -26,6 +26,7 @@ const StyledBalanceText = styled(Text)`
   overflow: hidden;
   max-width: 5rem;
   text-overflow: ellipsis;
+  font-weight: 800;
 `
 
 const Tag = styled.div`
@@ -43,7 +44,11 @@ const Tag = styled.div`
 `
 
 function Balance({ balance }: { balance: CurrencyAmount }) {
-  return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
+  return (
+    <StyledBalanceText fontSize="18px" color="#033A6E" title={balance.toExact()}>
+      {balance.toSignificant(4)}
+    </StyledBalanceText>
+  )
 }
 
 const TagContainer = styled.div`
@@ -112,12 +117,14 @@ function CurrencyRow({
       disabled={isSelected}
       selected={otherSelected}
     >
-      <CurrencyLogo currency={currency} size="24px" />
+      <CurrencyLogo currency={currency} size="36px" />
       <Column>
-        <Text title={currency.name}>{currency.symbol}</Text>
+        <Text fontSize="18px" color="#033A6E" style={{ fontWeight: 600 }} title={currency.name}>
+          {currency.symbol}
+        </Text>
         <FadedSpan>
           {!isOnSelectedList && customAdded && !(currency instanceof WrappedTokenInfo) ? (
-            <Text>
+            <Text fontSize="18px" color="#033A6E">
               Added by user
               <LinkStyledButton
                 onClick={(event) => {
@@ -130,7 +137,7 @@ function CurrencyRow({
             </Text>
           ) : null}
           {!isOnSelectedList && !customAdded && !(currency instanceof WrappedTokenInfo) ? (
-            <Text>
+            <Text fontSize="18px" color="#033A6E">
               Found by address
               <LinkStyledButton
                 onClick={(event) => {

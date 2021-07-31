@@ -12,7 +12,7 @@ const WarningContainer = styled.div`
   padding: 1rem;
   background: rgba(242, 150, 2, 0.05);
   border: 1px solid #f3841e;
-  border-radius: 20px;
+  border-radius: 2px;
   overflow: auto;
 `
 
@@ -48,8 +48,8 @@ export default function SyrupWarningModal({
               </Text>
               <Text color="failure">
                 {transactionType === 'Buying'
-                  ? 'You will not receive CAKE rewards for holding purchased SYRUP.'
-                  : 'You will need to buy back the same amount of SYRUP to be able to convert back to CAKE.'}
+                  ? 'You will not receive MJT rewards for holding purchased SYRUP.'
+                  : 'You will need to buy back the same amount of SYRUP to be able to convert back to MJT.'}
               </Text>
             </>
           )}
