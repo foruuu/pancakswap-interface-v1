@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import React, { CSSProperties, useEffect, useState } from 'react'
+import styled, { useTheme } from 'styled-components'
 import { Input, Text, Flex, Box } from '../../uikit'
 import { useUserDeadline } from 'state/user/hooks'
 import QuestionHelper from '../QuestionHelper'
@@ -15,12 +15,15 @@ const Field = styled.div`
 
 type TransactionDeadlineSettingModalProps = {
   translateString: (translationId: number, fallback: string) => string
+  styles: CSSProperties
 }
 
-const TransactionDeadlineSetting = ({ translateString }: TransactionDeadlineSettingModalProps) => {
+const TransactionDeadlineSetting = ({ translateString, styles }: TransactionDeadlineSettingModalProps) => {
   const [deadline, setDeadline] = useUserDeadline()
   const [value, setValue] = useState(deadline / 60) // deadline in minutes
   const [error, setError] = useState<string | null>(null)
+
+  const theme = useTheme()
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = evt.target
@@ -43,7 +46,7 @@ const TransactionDeadlineSetting = ({ translateString }: TransactionDeadlineSett
   }, [value, setError, setDeadline, translateString])
 
   return (
-    <Box mb="16px">
+    <Box mb="16px" style={styles}>
       <Flex alignItems="center" mb="8px">
         <Text bold>{translateString(90, 'Transaction deadline')}</Text>
         <QuestionHelper
@@ -51,7 +54,14 @@ const TransactionDeadlineSetting = ({ translateString }: TransactionDeadlineSett
         />
       </Flex>
       <Field>
-        <Input type="number" step="1" min="1" value={value} onChange={handleChange} />
+        <Input
+          type="number"
+          step="1"
+          min="1"
+          value={value}
+          onChange={handleChange}
+          style={{ border: `2px solid ${theme.colors.primary}` }}
+        />
         <Text fontSize="14px" ml="8px">
           Minutes
         </Text>

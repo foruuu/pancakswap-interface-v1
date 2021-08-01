@@ -20,6 +20,7 @@ import useI18n from 'hooks/useI18n'
 import PageHeader from 'components/PageHeader'
 import { Link } from 'react-router-dom'
 import AppBody from '../AppBody'
+import NoLiquidity from './NoLiquidity'
 
 export default function Pool() {
   const theme = useContext(ThemeContext)
@@ -32,9 +33,10 @@ export default function Pool() {
     () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
     [trackedTokenPairs]
   )
-  const liquidityTokens = useMemo(() => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken), [
-    tokenPairsWithLiquidityTokens,
-  ])
+  const liquidityTokens = useMemo(
+    () => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken),
+    [tokenPairsWithLiquidityTokens]
+  )
   const [v2PairsBalances, fetchingV2PairBalances] = useTokenBalancesWithLoadingIndicator(
     account ?? undefined,
     liquidityTokens
@@ -62,11 +64,7 @@ export default function Pool() {
         <PageHeader
           title={TranslateString(262, 'Liquidity')}
           description={TranslateString(1168, 'Add liquidity to receive LP tokens')}
-        >
-          <Button id="join-pool-button" as={Link} to="/add/BNB">
-            {TranslateString(168, 'Add Liquidity')}
-          </Button>
-        </PageHeader>
+        />
         <AutoColumn gap="lg" justify="center">
           <CardBody>
             <AutoColumn gap="12px" style={{ width: '100%' }}>
@@ -99,27 +97,22 @@ export default function Pool() {
                   ))}
                 </>
               ) : (
+                // no liquidity found
                 <LightCard padding="40px">
-                  <Text color="textDisabled" textAlign="center">
-                    {TranslateString(104, 'No liquidity found.')}
-                  </Text>
+                  <NoLiquidity TranslateString={TranslateString} />
                 </LightCard>
               )}
-
-              <div>
-                <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(106, "Don't see a pool you joined?")}{' '}
-                  <StyledInternalLink id="import-pool-link" to="/find">
-                    {TranslateString(108, 'Import it.')}
-                  </StyledInternalLink>
-                </Text>
-                <Text fontSize="14px" style={{ padding: '.5rem 0 .5rem 0' }}>
-                  {TranslateString(1172, 'Or, if you staked your LP tokens in a farm, unstake them to see them here.')}
-                </Text>
-              </div>
             </AutoColumn>
           </CardBody>
         </AutoColumn>
+        <Button
+          id="join-pool-button"
+          as={Link}
+          to="/add/BNB"
+          style={{ margin: '20px 5% 20px', borderRadius: '4px', width: '90%', height: '60px' }}
+        >
+          {TranslateString(168, 'Add Liquidity')}
+        </Button>
       </AppBody>
     </Container>
   )
