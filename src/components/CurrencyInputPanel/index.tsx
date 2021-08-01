@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, CSSProperties } from 'react'
 import { Currency, Pair } from '@nguyenphu27/sdk'
 import { Button, ChevronDownIcon, Text } from '../../uikit'
 import styled, { useTheme } from 'styled-components'
@@ -20,12 +20,12 @@ const InputRow = styled.div<{ selected: boolean }>`
 `
 const CurrencySelect = styled.button<{ selected: boolean }>`
   align-items: center;
-  height: 34px;
+  height: 44px;
   font-size: 16px;
   font-weight: 500;
   background-color: transparent;
   color: ${({ selected, theme }) => (selected ? theme.colors.text : '#FFFFFF')};
-  border-radius: 12px;
+  border-radius: 4px;
   outline: none;
   cursor: pointer;
   user-select: none;
@@ -34,7 +34,7 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
 
   :focus,
   :hover {
-    background-color: ${({ theme }) => darken(0.05, theme.colors.primary)};
+    background-color: ${({ theme }) => darken(0.05, '#DAEEE4')};
     color: #fff;
   }
 `
@@ -61,7 +61,7 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
   display: flex;
   flex-flow: column nowrap;
   position: relative;
-  border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
+  border-radius: ${({ hideInput }) => (hideInput ? '0px' : '4px')};
   background-color: transparent;
   z-index: 1;
 `
@@ -85,6 +85,7 @@ interface CurrencyInputPanelProps {
   otherCurrency?: Currency | null
   id: string
   showCommonBases?: boolean
+  styles?: CSSProperties
 }
 
 export default function CurrencyInputPanel({
@@ -102,6 +103,7 @@ export default function CurrencyInputPanel({
   otherCurrency,
   id,
   showCommonBases,
+  styles,
 }: CurrencyInputPanelProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const theme = useTheme()
@@ -113,7 +115,7 @@ export default function CurrencyInputPanel({
     setModalOpen(false)
   }, [setModalOpen])
   return (
-    <InputPanel id={id}>
+    <InputPanel id={id} style={styles}>
       <Container hideInput={hideInput}>
         {!hideInput && (
           <LabelRow>
@@ -150,7 +152,7 @@ export default function CurrencyInputPanel({
                 }}
               />
               {account && currency && showMaxButton && label !== 'To' && (
-                <Button onClick={onMax} scale="sm" variant="text">
+                <Button style={{ fontSize: '22px' }} onClick={onMax} scale="sm" variant="text">
                   MAX
                 </Button>
               )}

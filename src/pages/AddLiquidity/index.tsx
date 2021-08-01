@@ -36,6 +36,14 @@ import { Dots, Wrapper } from '../Pool/styleds'
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { PoolPriceBar } from './PoolPriceBar'
 import { ROUTER_ADDRESS } from '../../constants'
+import styled, { useTheme } from 'styled-components'
+
+const SwapButton = styled(Button)`
+  border-radius: 5px;
+  height: 60px;
+  font-size: 18px;
+  font-family: alibaba-puhuiti, sans-serif;
+`
 
 export default function AddLiquidity({
   match: {
@@ -43,6 +51,7 @@ export default function AddLiquidity({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  const theme = useTheme()
   const { account, chainId, library } = useActiveWeb3React()
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
@@ -340,6 +349,7 @@ export default function AddLiquidity({
                 currency={currencies[Field.CURRENCY_A]}
                 id="add-liquidity-input-tokena"
                 showCommonBases={false}
+                styles={{ border: `2px solid ${theme.colors.primary}`, background: `${theme.colors.inputSecondary}` }}
               />
               <ColumnCenter>
                 <AddIcon color="textSubtle" />
@@ -355,6 +365,7 @@ export default function AddLiquidity({
                 currency={currencies[Field.CURRENCY_B]}
                 id="add-liquidity-input-tokenb"
                 showCommonBases={false}
+                styles={{ border: `2px solid ${theme.colors.primary}`, background: `${theme.colors.inputSecondary}` }}
               />
               {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
                 <div>
@@ -390,7 +401,7 @@ export default function AddLiquidity({
                     isValid && (
                       <RowBetween>
                         {approvalA !== ApprovalState.APPROVED && (
-                          <Button
+                          <SwapButton
                             onClick={approveACallback}
                             disabled={approvalA === ApprovalState.PENDING}
                             style={{ width: approvalB !== ApprovalState.APPROVED ? '48%' : '100%' }}
@@ -400,10 +411,10 @@ export default function AddLiquidity({
                             ) : (
                               `Approve ${currencies[Field.CURRENCY_A]?.symbol}`
                             )}
-                          </Button>
+                          </SwapButton>
                         )}
                         {approvalB !== ApprovalState.APPROVED && (
-                          <Button
+                          <SwapButton
                             onClick={approveBCallback}
                             disabled={approvalB === ApprovalState.PENDING}
                             style={{ width: approvalA !== ApprovalState.APPROVED ? '48%' : '100%' }}
@@ -413,11 +424,11 @@ export default function AddLiquidity({
                             ) : (
                               `Approve ${currencies[Field.CURRENCY_B]?.symbol}`
                             )}
-                          </Button>
+                          </SwapButton>
                         )}
                       </RowBetween>
                     )}
-                  <Button
+                  <SwapButton
                     onClick={() => {
                       if (expertMode) {
                         onAdd()
@@ -434,7 +445,7 @@ export default function AddLiquidity({
                     width="100%"
                   >
                     {error ?? 'Supply'}
-                  </Button>
+                  </SwapButton>
                 </AutoColumn>
               )}
             </AutoColumn>
