@@ -41,7 +41,7 @@ const RecentTransactionsModal = ({ onDismiss = defaultOnDismiss, translateString
   }, [allTransactions])
 
   return (
-    <Modal title={translateString(1202, 'Recent transactions')} onDismiss={onDismiss}>
+    <Modal title={translateString(1202, 'Recent transactions')} onDismiss={onDismiss} style={{ width: '600px' }}>
       {!account && (
         <Flex justifyContent="center" flexDirection="column" alignItems="center">
           <Text mb="8px" bold>

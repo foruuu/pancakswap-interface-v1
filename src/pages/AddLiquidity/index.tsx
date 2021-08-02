@@ -36,6 +36,14 @@ import { Dots, Wrapper } from '../Pool/styleds'
 import { ConfirmAddModalBottom } from './ConfirmAddModalBottom'
 import { PoolPriceBar } from './PoolPriceBar'
 import { ROUTER_ADDRESS } from '../../constants'
+import styled, { useTheme } from 'styled-components'
+
+const SwapButton = styled(Button)`
+  border-radius: 5px;
+  height: 60px;
+  font-size: 18px;
+  font-family: alibaba-puhuiti, sans-serif;
+`
 
 export default function AddLiquidity({
   match: {
@@ -43,6 +51,7 @@ export default function AddLiquidity({
   },
   history,
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
+  const theme = useTheme()
   const { account, chainId, library } = useActiveWeb3React()
   const currencyA = useCurrency(currencyIdA)
   const currencyB = useCurrency(currencyIdB)
@@ -196,36 +205,36 @@ export default function AddLiquidity({
     return noLiquidity ? (
       <AutoColumn gap="20px">
         <LightCard mt="20px" borderRadius="20px">
-          <RowFlat>
-            <UIKitText fontSize="48px" mr="8px">
+          <RowFlat style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+            <UIKitText fontSize="28px" mr="0px" fontWeight={600}>
               {`${currencies[Field.CURRENCY_A]?.symbol}/${currencies[Field.CURRENCY_B]?.symbol}`}
             </UIKitText>
             <DoubleCurrencyLogo
               currency0={currencies[Field.CURRENCY_A]}
               currency1={currencies[Field.CURRENCY_B]}
-              size={30}
+              size={36}
             />
           </RowFlat>
         </LightCard>
       </AutoColumn>
     ) : (
       <AutoColumn gap="20px">
-        <RowFlat style={{ marginTop: '20px' }}>
-          <UIKitText fontSize="48px" mr="8px">
+        <RowFlat style={{ marginTop: '20px', alignItems: 'center', justifyContent: 'space-between' }}>
+          <UIKitText fontSize="36px" mr="8px" fontWeight={800}>
             {liquidityMinted?.toSignificant(6)}
           </UIKitText>
           <DoubleCurrencyLogo
             currency0={currencies[Field.CURRENCY_A]}
             currency1={currencies[Field.CURRENCY_B]}
-            size={30}
+            size={36}
           />
         </RowFlat>
         <Row>
-          <UIKitText fontSize="24px">
+          <UIKitText fontSize="20px" color="text">
             {`${currencies[Field.CURRENCY_A]?.symbol}/${currencies[Field.CURRENCY_B]?.symbol} Pool Tokens`}
           </UIKitText>
         </Row>
-        <UIKitText small textAlign="left" padding="8px 0 0 0 " style={{ fontStyle: 'italic' }}>
+        <UIKitText small textAlign="left" padding="20px 30px" style={{ background: '#F2FFF6' }}>
           {`Output is estimated. If the price changes by more than ${
             allowedSlippage / 100
           }% your transaction will revert.`}
@@ -340,6 +349,7 @@ export default function AddLiquidity({
                 currency={currencies[Field.CURRENCY_A]}
                 id="add-liquidity-input-tokena"
                 showCommonBases={false}
+                styles={{ border: `2px solid ${theme.colors.primary}`, background: `${theme.colors.inputSecondary}` }}
               />
               <ColumnCenter>
                 <AddIcon color="textSubtle" />
@@ -355,20 +365,21 @@ export default function AddLiquidity({
                 currency={currencies[Field.CURRENCY_B]}
                 id="add-liquidity-input-tokenb"
                 showCommonBases={false}
+                styles={{ border: `2px solid ${theme.colors.primary}`, background: `${theme.colors.inputSecondary}` }}
               />
               {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
-                <div>
+                <div style={{ background: `#F2FFF6`, padding: '20px 0' }}>
                   <UIKitText
-                    style={{ textTransform: 'uppercase', fontWeight: 600 }}
-                    color="textSubtle"
-                    fontSize="12px"
+                    style={{ textTransform: 'uppercase', fontWeight: 600, textAlign: 'center' }}
+                    color="text"
+                    fontSize="16px"
                     mb="2px"
                   >
                     {noLiquidity
                       ? TranslateString(1164, 'Initial prices and pool share')
                       : TranslateString(1166, 'Prices and pool share')}
                   </UIKitText>
-                  <Pane>
+                  <Pane style={{ border: 'none' }}>
                     <PoolPriceBar
                       currencies={currencies}
                       poolTokenPercentage={poolTokenPercentage}
@@ -390,7 +401,7 @@ export default function AddLiquidity({
                     isValid && (
                       <RowBetween>
                         {approvalA !== ApprovalState.APPROVED && (
-                          <Button
+                          <SwapButton
                             onClick={approveACallback}
                             disabled={approvalA === ApprovalState.PENDING}
                             style={{ width: approvalB !== ApprovalState.APPROVED ? '48%' : '100%' }}
@@ -400,10 +411,10 @@ export default function AddLiquidity({
                             ) : (
                               `Approve ${currencies[Field.CURRENCY_A]?.symbol}`
                             )}
-                          </Button>
+                          </SwapButton>
                         )}
                         {approvalB !== ApprovalState.APPROVED && (
-                          <Button
+                          <SwapButton
                             onClick={approveBCallback}
                             disabled={approvalB === ApprovalState.PENDING}
                             style={{ width: approvalA !== ApprovalState.APPROVED ? '48%' : '100%' }}
@@ -413,11 +424,11 @@ export default function AddLiquidity({
                             ) : (
                               `Approve ${currencies[Field.CURRENCY_B]?.symbol}`
                             )}
-                          </Button>
+                          </SwapButton>
                         )}
                       </RowBetween>
                     )}
-                  <Button
+                  <SwapButton
                     onClick={() => {
                       if (expertMode) {
                         onAdd()
@@ -434,7 +445,7 @@ export default function AddLiquidity({
                     width="100%"
                   >
                     {error ?? 'Supply'}
-                  </Button>
+                  </SwapButton>
                 </AutoColumn>
               )}
             </AutoColumn>

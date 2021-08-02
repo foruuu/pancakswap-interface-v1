@@ -16,6 +16,7 @@ import QuestionHelper from '../QuestionHelper'
 import { AutoRow, RowBetween, RowFixed } from '../Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { StyledBalanceMaxMini, SwapCallbackError } from './styleds'
+import { SwapButton } from '../Button'
 
 export default function SwapModalFooter({
   trade,
@@ -31,10 +32,10 @@ export default function SwapModalFooter({
   disabledConfirm: boolean
 }) {
   const [showInverted, setShowInverted] = useState<boolean>(false)
-  const slippageAdjustedAmounts = useMemo(() => computeSlippageAdjustedAmounts(trade, allowedSlippage), [
-    allowedSlippage,
-    trade,
-  ])
+  const slippageAdjustedAmounts = useMemo(
+    () => computeSlippageAdjustedAmounts(trade, allowedSlippage),
+    [allowedSlippage, trade]
+  )
   const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   const severity = warningSeverity(priceImpactWithoutFee)
   const TranslateString = useI18n()
@@ -115,7 +116,7 @@ export default function SwapModalFooter({
       </AutoColumn>
 
       <AutoRow>
-        <Button
+        <SwapButton
           onClick={onConfirm}
           disabled={disabledConfirm}
           variant={severity > 2 ? 'danger' : 'primary'}
@@ -124,7 +125,7 @@ export default function SwapModalFooter({
           width="100%"
         >
           {severity > 2 ? 'Swap Anyway' : 'Confirm Swap'}
-        </Button>
+        </SwapButton>
 
         {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
       </AutoRow>

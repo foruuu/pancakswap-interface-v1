@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { Box, Button, Flex, Input, Text } from '../../uikit'
 import { useUserSlippageTolerance } from 'state/user/hooks'
 import QuestionHelper from '../QuestionHelper'
@@ -44,6 +44,7 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
   const [userSlippageTolerance, setUserslippageTolerance] = useUserSlippageTolerance()
   const [value, setValue] = useState(userSlippageTolerance / 100)
   const [error, setError] = useState<string | null>(null)
+  const theme = useTheme()
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { value: inputValue } = evt.target
     setValue(parseFloat(inputValue))
@@ -91,7 +92,11 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
 
             return (
               <Option key={predefinedValue}>
-                <Button variant={value === predefinedValue ? 'primary' : 'tertiary'} onClick={handleClick}>
+                <Button
+                  style={{ borderRadius: '4px', border: `2px solid ${theme.colors.primary}` }}
+                  variant={value === predefinedValue ? 'primary' : 'tertiary'}
+                  onClick={handleClick}
+                >
                   {label}
                 </Button>
               </Option>
@@ -101,6 +106,7 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
         <Flex alignItems="center">
           <Option>
             <Input
+              style={{ borderRadius: '4px' }}
               type="number"
               scale="lg"
               step={0.1}
@@ -112,7 +118,7 @@ const SlippageToleranceSettings = ({ translateString }: SlippageToleranceSetting
             />
           </Option>
           <Option>
-            <Text fontSize="18px">%</Text>
+            <Text fontSize="14px">%</Text>
           </Option>
         </Flex>
       </Options>
