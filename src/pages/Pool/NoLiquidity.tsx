@@ -15,10 +15,9 @@ const NoLiquidityWrap = styled.div`
   align-items: center;
 `
 
-const SwapIcon = styled.div`
+const SwapIcon = styled.img`
   height: 110px;
   width: 60px;
-  background: aliceblue;
   margin-right: 30px;
 `
 const TextWrap = styled.div`
@@ -47,7 +46,7 @@ const NoLiquidity: FunctionComponent<Props> = ({ TranslateString }) => {
   const history = useHistory()
   return (
     <NoLiquidityWrap>
-      <SwapIcon />
+      <SwapIcon src={require('../../assets/images/cup.svg').default} />
       <TextWrap>
         <Text color="textDisabled" textAlign="center">
           {TranslateString(104, 'No liquidity found.')}

@@ -42,7 +42,8 @@
     "@typescript-eslint/no-unused-vars": 0,
     "react/jsx-boolean-value": 0,
     "import/order": 0,
-    "import/no-unresolved": 0
+    "import/no-unresolved": 0,
+    "import/prefer-default-export": 0
     // End temporary rules
   }
 }

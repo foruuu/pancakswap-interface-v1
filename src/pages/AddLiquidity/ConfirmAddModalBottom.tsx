@@ -5,6 +5,8 @@ import { TranslateString } from 'utils/translateTextHelpers'
 import { RowBetween, RowFixed } from '../../components/Row'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import { Field } from '../../state/mint/actions'
+import { SwapButton } from '../../components/Button'
+import { ThroughLine } from '../Swap'
 
 export function ConfirmAddModalBottom({
   noLiquidity,
@@ -23,30 +25,35 @@ export function ConfirmAddModalBottom({
 }) {
   return (
     <>
-      <RowBetween>
+      <RowBetween align="center">
         <Text>{currencies[Field.CURRENCY_A]?.symbol} Deposited</Text>
-        <RowFixed>
-          <CurrencyLogo currency={currencies[Field.CURRENCY_A]} style={{ marginRight: '8px' }} />
-          <Text>{parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}</Text>
+        <RowFixed style={{ alignItems: 'center' }}>
+          <CurrencyLogo size="36px" currency={currencies[Field.CURRENCY_A]} style={{ marginRight: '8px' }} />
+          <Text fontWeight={500} fontSize="18px">
+            {parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
+          </Text>
         </RowFixed>
       </RowBetween>
+      <ThroughLine style={{ position: 'relative', padding: 0, width: '100%', left: 0, margin: '5px 0' }} />
       <RowBetween>
         <Text>{currencies[Field.CURRENCY_B]?.symbol} Deposited</Text>
         <RowFixed>
-          <CurrencyLogo currency={currencies[Field.CURRENCY_B]} style={{ marginRight: '8px' }} />
-          <Text>{parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}</Text>
+          <CurrencyLogo size="36px" currency={currencies[Field.CURRENCY_B]} style={{ marginRight: '8px' }} />
+          <Text fontWeight={500} fontSize="18px">
+            {parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
+          </Text>
         </RowFixed>
       </RowBetween>
       <RowBetween>
         <Text>Rates</Text>
-        <Text>
+        <Text color="#979797">
           {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${price?.toSignificant(4)} ${
             currencies[Field.CURRENCY_B]?.symbol
           }`}
         </Text>
       </RowBetween>
       <RowBetween style={{ justifyContent: 'flex-end' }}>
-        <Text>
+        <Text color="#979797">
           {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${price?.invert().toSignificant(4)} ${
             currencies[Field.CURRENCY_A]?.symbol
           }`}
@@ -54,11 +61,11 @@ export function ConfirmAddModalBottom({
       </RowBetween>
       <RowBetween>
         <Text>Share of Pool:</Text>
-        <Text>{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Text>
+        <Text fontWeight={500}>{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Text>
       </RowBetween>
-      <Button mt="20px" onClick={onAdd}>
+      <SwapButton mt="20px" onClick={onAdd}>
         {noLiquidity ? 'Create Pool & Supply' : 'Confirm Supply'}
-      </Button>
+      </SwapButton>
     </>
   )
 }

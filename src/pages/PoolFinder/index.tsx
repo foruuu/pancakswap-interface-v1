@@ -18,11 +18,19 @@ import { currencyId } from 'utils/currencyId'
 import useI18n from 'hooks/useI18n'
 import AppBody from '../AppBody'
 import { Dots } from '../Pool/styleds'
+import styled from 'styled-components'
 
 enum Fields {
   TOKEN0 = 0,
   TOKEN1 = 1,
 }
+
+const SwapButton = styled(Button)`
+  border-radius: 5px;
+  height: 60px;
+  font-size: 18px;
+  font-family: alibaba-puhuiti, sans-serif;
+`
 
 export default function PoolFinder() {
   const { account } = useActiveWeb3React()
@@ -87,7 +95,7 @@ export default function PoolFinder() {
         <FindPoolTabs />
         <CardBody>
           <AutoColumn gap="md">
-            <Button
+            <SwapButton
               onClick={() => {
                 setShowSearch(true)
                 setActiveField(Fields.TOKEN0)
@@ -97,13 +105,13 @@ export default function PoolFinder() {
               width="100%"
             >
               {currency0 ? currency0.symbol : TranslateString(82, 'Select a Token')}
-            </Button>
+            </SwapButton>
 
             <ColumnCenter>
               <AddIcon color="textSubtle" />
             </ColumnCenter>
 
-            <Button
+            <SwapButton
               onClick={() => {
                 setShowSearch(true)
                 setActiveField(Fields.TOKEN1)
@@ -113,7 +121,7 @@ export default function PoolFinder() {
               width="100%"
             >
               {currency1 ? currency1.symbol : TranslateString(82, 'Select a Token')}
-            </Button>
+            </SwapButton>
 
             {hasPosition && (
               <ColumnCenter
